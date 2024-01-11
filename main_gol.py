@@ -25,5 +25,24 @@ def random_state(width, height):
     
     return state
 
+# Mileston 2: Pretty-printing board to terminal
 
-print(random_state(5,5))
+# Rendering any board state
+def render(board_state):
+    top_bottom_edge = "-" * (len(board_state[0]) + 2)
+    print(top_bottom_edge) 
+    for x in board_state:
+        print("|", end = "")
+        for y in x:
+            if y == 1:
+                print("#", end = "")
+            else:
+                print(" ", end = "")
+        print("|")
+    print(top_bottom_edge) 
+
+a_dead_state = dead_state(5,5)
+render(a_dead_state)
+
+a_random_state = random_state(10, 5)
+render(a_random_state)

@@ -46,3 +46,30 @@ render(a_dead_state)
 
 a_random_state = random_state(10, 5)
 render(a_random_state)
+
+
+# Milestone 3: Calculating next board state
+
+# Roughly...
+"""
+def next_board_state(prev_board_state):
+    # Give it a cell return how many live & dead neighbors
+    # actually just need to count number of 1s
+    def neighbor_count(cell):
+        # return num of live neighbors
+
+    # Iterating through previous state board
+    for x in prev_board_state:
+        for y in x:
+            live_neighbors = neighbor_count(y)
+            if y = 1:
+                if live_neighbors <= 1:
+                    y = 0 #dead
+                elif 2 <= live_neighbors <= 3:
+                    y = 1 # continue?
+                else:
+                    y = 0 #dead
+            else:
+                if live_neighbors == 3:
+                    y = 1 # revives
+"""

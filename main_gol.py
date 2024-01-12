@@ -1,4 +1,6 @@
 import random
+from time import sleep
+
 
 # Milestone 1: Storing the board state
     
@@ -16,7 +18,7 @@ def random_state(width, height):
         for y in range(len(state[x])):
             random_number = random.random()
 
-            if random_number >= 0.5:
+            if random_number >= 0.3:
                 cell_state = 0
             else:
                 cell_state = 1
@@ -24,6 +26,7 @@ def random_state(width, height):
             state[x][y] = cell_state
     
     return state
+
 
 # Mileston 2: Pretty-printing board to terminal
 
@@ -41,35 +44,48 @@ def render(board_state):
         print("|")
     print(top_bottom_edge) 
 
-a_dead_state = dead_state(5,5)
-render(a_dead_state)
-
-a_random_state = random_state(10, 5)
-render(a_random_state)
-
 
 # Milestone 3: Calculating next board state
 
-# Roughly...
-"""
-def next_board_state(prev_board_state):
-    # Give it a cell return how many live & dead neighbors
-    # actually just need to count number of 1s
-    def neighbor_count(cell):
-        # return num of live neighbors
+def next_board_state(init_state):
+    width = len(init_state[0])
+    height = len(init_state)
+    next_state = dead_state(width, height)
 
-    # Iterating through previous state board
-    for x in prev_board_state:
-        for y in x:
-            live_neighbors = neighbor_count(y)
-            if y = 1:
-                if live_neighbors <= 1:
-                    y = 0 #dead
-                elif 2 <= live_neighbors <= 3:
-                    y = 1 # continue?
+    for x in range(height):
+        for y in range(width):
+            current_cell_value = init_state[x][y]
+            counter = 0
+
+            # Iterating around every cell and taking into account edges
+            for k in range(max(x - 1, 0), min(x + 2, height)):
+                for l in range(max(y - 1,0), min(y + 2, width)):
+                    if k == x and l == y:
+                        continue
+                    if init_state[k][l] == 1:
+                        counter += 1
+            
+            # Updating dead_state board
+            if current_cell_value == 1:
+                if counter <= 1 or counter > 3:
+                    next_state[x][y] = 0
                 else:
-                    y = 0 #dead
-            else:
-                if live_neighbors == 3:
-                    y = 1 # revives
-"""
+                    next_state[x][y] = 1
+            else: # Checking for last condition
+                if counter == 3:
+                    next_state[x][y] = 1
+    
+    return next_state
+
+
+start_state = random_state(30,20)
+render(start_state)
+next_drawing = next_board_state(start_state)
+render(next_drawing)
+next_drawing = next_board_state(next_drawing)
+render(next_drawing)
+
+while True:
+    next_drawing = next_board_state(next_drawing)
+    render(next_drawing)
+    sleep(0.5)

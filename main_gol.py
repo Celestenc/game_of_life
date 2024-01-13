@@ -18,7 +18,7 @@ def random_state(width, height):
         for y in range(len(state[x])):
             random_number = random.random()
 
-            if random_number >= 0.3:
+            if random_number >= 0.5:
                 cell_state = 0
             else:
                 cell_state = 1
@@ -88,4 +88,4 @@ render(next_drawing)
 while True:
     next_drawing = next_board_state(next_drawing)
     render(next_drawing)
-    sleep(0.5)
+    sleep(0.2)

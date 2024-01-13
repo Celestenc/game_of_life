@@ -2,13 +2,14 @@ import random
 from time import sleep
 
 
-# Milestone 1: Storing the board state
+# Storing the board state
     
 # Creating matrix with all 0s, ie all cells are dead
 def dead_state(width, height):
     board_matrix = [[0 for i in range(width)] for j in range(height)]
     return board_matrix
 
+# Create a random initial board state
 def random_state(width, height):
     # Build board using previous work
     state = dead_state(width, height)
@@ -28,9 +29,7 @@ def random_state(width, height):
     return state
 
 
-# Mileston 2: Pretty-printing board to terminal
-
-# Rendering any board state
+# Rendering any board state ie pretty-printing board to terminal
 def render(board_state):
     top_bottom_edge = "-" * (len(board_state[0]) + 2)
     print(top_bottom_edge) 
@@ -45,8 +44,7 @@ def render(board_state):
     print(top_bottom_edge) 
 
 
-# Milestone 3: Calculating next board state
-
+# Calculating next board state
 def next_board_state(init_state):
     width = len(init_state[0])
     height = len(init_state)
@@ -77,14 +75,26 @@ def next_board_state(init_state):
     
     return next_state
 
+# Handling designs from txt files
+def load_board_state(txt_file):
+    life_board = []
+    with open(txt_file) as life:
+        for x in life:
+            life_row = []
+            for y in x:
+                if y != '\n':
+                    life_row.append(int(y))
+            life_board.append(life_row)
 
-start_state = random_state(30,20)
+    return life_board
+
+# Printing Cellular Automata designs from txt.file
+start_state = load_board_state("./gosper_glider_gun.txt")
 render(start_state)
 next_drawing = next_board_state(start_state)
 render(next_drawing)
-next_drawing = next_board_state(next_drawing)
-render(next_drawing)
 
+# Forever printing the next board
 while True:
     next_drawing = next_board_state(next_drawing)
     render(next_drawing)
